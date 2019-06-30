@@ -191,6 +191,17 @@ pytest = ["*", ">=3.6"]
 
 [[package]]
 category = "main"
+description = "Thin-wrapper around the mock package for easier use with py.test"
+name = "pytest-mock"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.10.4"
+
+[package.dependencies]
+pytest = ">=2.7"
+
+[[package]]
+category = "main"
 description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
@@ -222,7 +233,7 @@ python-versions = ">=2.7"
 version = "0.5.1"
 
 [metadata]
-content-hash = "bd58df16a7c90b8c88efe9e553e725eff4f33559adfa62c7d7e8ca7db1b0e251"
+content-hash = "aa060b16f4027c20b24d287f6f77f9a0f00cda5aebd4463f2ef0507c8f706fdd"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -244,6 +255,7 @@ py = ["64f65755aee5b381cea27766a3a147c3f15b9b6b9ac88676de66ba2ae36793fa", "dc639
 pyrsistent = ["16692ee739d42cf5e39cef8d27649a8c1fdb7aa99887098f1460057c5eb75c3a"]
 pytest = ["3f193df1cfe1d1609d4c583838bea3d532b18d6160fd3f55c9447fdca30848ec", "e246cf173c01169b9617fc07264b7b1316e78d7a650055235d6d897bc80d9660"]
 pytest-flask = ["283730b469604ecb94caac28df99a40b7c785b828dd8d3323596718b51dfaeb2", "d874781b622210d8c5d8061cdb091cb059fcb12203125110bd8e6f9256ccbf49"]
+pytest-mock = ["43ce4e9dd5074993e7c021bb1c22cbb5363e612a2b5a76bc6d956775b10758b7", "5bf5771b1db93beac965a7347dc81c675ec4090cb841e49d9d34637a25c30568"]
 pytz = ["303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda", "d747dd3d23d77ef44c6a3526e274af6efeb0a6f1afd5a69ba4d5be4098c8e141"]
 six = ["3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c", "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"]
 werkzeug = ["865856ebb55c4dcd0630cdd8f3331a1847a819dda7e8c750d3db6f2aa6c0209c", "a0b915f0815982fb2a09161cb8f31708052d0951c3ba433ccc5e1aa276507ca6"]
