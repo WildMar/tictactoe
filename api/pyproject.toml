@@ -8,6 +8,7 @@ authors = ["Wilding, Marina"]
 python = "^3.7"
 Flask = "^1.0"
 Flask-RestPlus = "^0.12.1"
+pytest-flask = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
