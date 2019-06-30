@@ -17,3 +17,15 @@ def check_win(board):
                 if matched != "":
                     return set(element).pop()
     return None
+
+
+def check_draw(board):
+    """
+    Check if the state of the current board is a draw
+    Args:
+        board (list):  the state of the board represented by a two dimensional array
+
+    Returns:
+        bool: True or False
+    """
+    return all("" not in row for row in board)
