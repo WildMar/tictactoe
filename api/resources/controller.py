@@ -19,7 +19,7 @@ def check_win(board):
             if len(set(element)) == 1:
                 matched = set(element).pop()
                 if matched != "":
-                    return set(element).pop()
+                    return matched
     return None
 
 
@@ -40,6 +40,7 @@ def calculate_next_move(board, move_number):
     Determines and marks the board for the next turn.
     Args:
         board (list): The board state represented by a matrix
+        move_number (int): The number of move the game is on
 
     Returns:
         list: A new board with the new move recorded in the matrix
@@ -48,6 +49,20 @@ def calculate_next_move(board, move_number):
     if move_number == 1:
         new_board = _first_move(board=board)
         return new_board
+    else:
+        # Check if we're close to winning and take it
+        x, y = find_near_win(board=board, player="X")
+        if x and y:
+            new_board = copy.deepcopy(board)
+            new_board[x][y] = "X"
+            return new_board
+
+        # Check if they are close to winning and block
+        x, y = find_near_win(board=board, player="O")
+        if x and y:
+            new_board = copy.deepcopy(board)
+            new_board[x][y] = "X"
+            return new_board
 
 
 def _first_move(board):
@@ -57,6 +72,7 @@ def _first_move(board):
 
     If your opponent hasn't selected the middle block, take it.
     If your opponent has selected an edge, pick a far corner
+    If your opponent has selected the center, pick the first corner
     Examples:
           X |    |
         ==============
@@ -75,10 +91,16 @@ def _first_move(board):
     if board[1][1] == "":
         new_board = copy.deepcopy(board)
         new_board[1][1] = "X"
-        return board
+        return new_board
+    elif board[1][1] == "O":
+        # If they had taken the center, pick the first corner
+        new_board = copy.deepcopy(board)
+        new_board[0][0] = "X"
+        return new_board
 
-    if _check_edges(board):
-        return board
+    new_board = _check_edges(board)
+    if new_board:
+        return new_board
 
 
 def _check_edges(board):
@@ -110,3 +132,39 @@ def _check_edges(board):
     elif "O" in row3_edges:
         new_board[0][position] = "X"
     return new_board
+
+
+def find_near_win(board, player):
+    """
+    Find out if the given player can win with one move based on the state of the board
+    Args:
+        board (list): The board state represented by a matrix
+        player (string): The player's representation on the board
+    Returns:
+         tuple(int, int): the position to take for the winning move
+    """
+    rows = [row for row in board]
+    diagonals = [[board[x][x] for x in range(0, len(board))], [board[0][2], board[1][1], board[2][0]]]
+    columns = [[board[row][column] for row in range(0, len(board))] for column in range(0, len(board))]
+    to_test = [rows, diagonals, columns]
+    element_idx = 0
+    for direction in to_test:
+        for element in direction:
+            if "" in element:
+                if element.count(player) == 2:
+                    # TODO: if there's time, come back and make this cleaner
+                    if len(direction) == 2:
+                        # It is a diagonal win, therefore treated differently
+                        if direction.index(element) == 0:
+                            return element.index(""), element.index("")
+                        else:
+                            if element.index("") == 0:
+                                return 2, 0
+                            elif element.index("") == 1:
+                                return 1, 1
+                            elif element.index("") == 2:
+                                return 0, 2
+                    return direction.index(element), element.index("")
+            element_idx += 1
+        element_idx = 0
+    return None, None

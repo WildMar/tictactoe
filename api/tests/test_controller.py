@@ -1,6 +1,6 @@
 import pytest
 
-from controller import _check_edges
+from controller import _check_edges, find_near_win
 from controller import check_draw
 from controller import check_win
 
@@ -89,3 +89,23 @@ def test_draw(board, is_draw):
 ])
 def test_check_edges(board, expected_return):
     assert _check_edges(board=board) == expected_return
+
+
+@pytest.mark.parametrize("board, player, x, y", [
+    ([["O", "O", ""],
+      ["", "", ""],
+      ["", "", ""]], "O", 0, 2),
+    ([["O", "", ""],
+      ["", "O", ""],
+      ["", "", ""]], "O", 2, 2),
+    ([["", "", ""],
+      ["O", "", ""],
+      ["O", "", ""]], "O", 0, 0),
+    ([["O", "", ""],
+      ["", "O", ""],
+      ["", "", "X"]], "O", None, None)
+])
+def test_find_near_win(board, player, x, y):
+    x_idx, y_idx = find_near_win(board=board, player=player)
+    assert x_idx == x
+    assert y_idx == y
