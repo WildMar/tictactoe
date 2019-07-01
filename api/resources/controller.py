@@ -35,7 +35,7 @@ def check_draw(board):
     return all("" not in row for row in board)
 
 
-def calculate_next_move(board, move_number):
+def calculate_next_move(board, move_number, player):
     """
     Determines and marks the board for the next turn.
     Args:
@@ -45,24 +45,41 @@ def calculate_next_move(board, move_number):
     Returns:
         list: A new board with the new move recorded in the matrix
     """
+    if player == "O":
+        opponent = "X"
+    else:
+        opponent = "O"
 
     if move_number == 1:
         new_board = _first_move(board=board)
-        return new_board
+        return new_board, "IN PROGRESS"
     else:
+        winner = check_win(board=board)
+        if winner:
+            return board, f"WINNER: {winner}"
+        if check_draw(board=board):
+            return board, "DRAW"
+
         # Check if we're close to winning and take it
-        x, y = find_near_win(board=board, player="X")
-        if x and y:
+        x, y = find_near_win(board=board, player=player)
+        if x is not None and y is not None:
             new_board = copy.deepcopy(board)
-            new_board[x][y] = "X"
-            return new_board
+            new_board[x][y] = player
+            return new_board, "IN PROGRESS"
 
         # Check if they are close to winning and block
-        x, y = find_near_win(board=board, player="O")
-        if x and y:
+        x, y = find_near_win(board=board, player=opponent)
+        if x is not None and y is not None:
             new_board = copy.deepcopy(board)
-            new_board[x][y] = "X"
-            return new_board
+            new_board[x][y] = player
+            return new_board, "IN PROGRESS"
+
+        new_board = copy.deepcopy(board)
+        for row in board:
+            if "" in row:
+                new_board[board.index(row)][row.index("")] = player
+                return new_board, "IN PROGRESS"
+        raise Exception("IM STUCK")
 
 
 def _first_move(board):
@@ -146,25 +163,50 @@ def find_near_win(board, player):
     rows = [row for row in board]
     diagonals = [[board[x][x] for x in range(0, len(board))], [board[0][2], board[1][1], board[2][0]]]
     columns = [[board[row][column] for row in range(0, len(board))] for column in range(0, len(board))]
-    to_test = [rows, diagonals, columns]
-    element_idx = 0
-    for direction in to_test:
-        for element in direction:
-            if "" in element:
-                if element.count(player) == 2:
-                    # TODO: if there's time, come back and make this cleaner
-                    if len(direction) == 2:
-                        # It is a diagonal win, therefore treated differently
-                        if direction.index(element) == 0:
-                            return element.index(""), element.index("")
-                        else:
-                            if element.index("") == 0:
-                                return 2, 0
-                            elif element.index("") == 1:
-                                return 1, 1
-                            elif element.index("") == 2:
-                                return 0, 2
-                    return direction.index(element), element.index("")
-            element_idx += 1
-        element_idx = 0
+
+    x, y = _find_row_win(rows, player)
+    if x is not None and y is not None:
+        return x, y
+
+    x, y = _find_column_win(columns, player)
+    if x is not None and y is not None:
+        return x, y
+
+    x, y = _find_diagonal_win(diagonals, player)
+    if x is not None and y is not None:
+        return x, y
+
+    return None, None
+
+
+def _find_row_win(rows, player):
+    for row in rows:
+        if "" in row:
+            if row.count(player) == 2:
+                return rows.index(row), row.index("")
+    return None, None
+
+
+def _find_column_win(columns, player):
+    for col in columns:
+        if "" in col:
+            if col.count(player) == 2:
+                return col.index(""), columns.index(col)
+    return None, None
+
+
+def _find_diagonal_win(diagonals, player):
+    for diag in diagonals:
+        if "" in diag:
+            if diag.count(player) == 2:
+                if diagonals.index(diag) == 0:
+                    return diag.index(""), diag.index("")
+                else:
+                    if diag.index("") == 0:
+                        return 0, 2
+                    elif diag.index("") == 1:
+                        return 1, 1
+                    elif diag.index("") == 2:
+                        return 2, 0
+
     return None, None
