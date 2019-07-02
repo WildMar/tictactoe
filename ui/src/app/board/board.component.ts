@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-
+import {Cell} from "../cell";
 
 
 @Component({
@@ -9,14 +9,20 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class BoardComponent implements OnInit {
-  cells: string[] = [];
+  cells: Cell[] = [];
 
   constructor() {
   }
 
   ngOnInit() {
     for (let i = 0; i < 9; i++) {
-      this.cells[i] = "";
+      this.cells[i] = {value:"___"};
+    }
+  }
+
+  onClick(selectedCell: Cell) {
+    if (selectedCell.value == "___") {
+      selectedCell.value = "O";
     }
   }
 }

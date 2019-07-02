@@ -1,13 +1,11 @@
-.mat-grid-list {
+.board {
+  display: flex;
+  flex-wrap:wrap;
   background: purple;
+  height: 40em;
 }
 
-.game-container {
+.cell-column {
+  flex:1 0 33.3%;
 
 }
-
-.board-container {
-  width: 50em;
-  height: 50em
-}
-
