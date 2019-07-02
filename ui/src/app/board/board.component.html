@@ -1,67 +1,20 @@
 <h2>BOARD</h2>
 
-<div class="game-container"></div>
-<div class="board-container">
 
-  <mat-card>
-    <mat-card-content>
-      <mat-grid-list class="board" [cols]="3" rowHeight="2:1">
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-        <mat-grid-tile
-          [style.border-right]="'1px solid grey'"
-          [style.border-bottom]="'1px solid grey'"
-          [style.border-left]="'1px solid grey'">
-          <button mat-button class="select-button" (click)="onClick()">{{ value }}</button>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-card-content>
-  </mat-card>
+<div class="board">
+    <app-cell class="cell-column" *ngFor="let cell of cells | slice:0:3;"
+              [value]="cell.value"
+              (userClick)="onClick(cell)">
+    </app-cell>
 
+
+    <app-cell class="cell-column" *ngFor="let cell of cells | slice:3:6;"
+              [value]="cell.value"
+              (userClick)="onClick(cell)">
+    </app-cell>
+
+    <app-cell class="cell-column" *ngFor="let cell of cells | slice:6:9;"
+              [value]="cell.value"
+              (userClick)="onClick(cell)">
+    </app-cell>
 </div>

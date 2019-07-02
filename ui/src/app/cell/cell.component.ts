@@ -1,19 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Cell} from "../cell";
 
 
 @Component({
   selector: 'app-cell',
   templateUrl: './cell.component.html',
-  styleUrls: ['./cell.component.css']
+  styleUrls: ['./cell.component.css'],
+
 })
 export class CellComponent implements OnInit {
-  value = "";
-  constructor() { }
+  @Input() value;
+  @Output("userClick") click = new EventEmitter<string>();
+
+
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
-  onClick() {
-    this.value = "X";
+  cellClick() {
+    this.click.emit("")
   }
 }
