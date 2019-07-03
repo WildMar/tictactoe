@@ -5,7 +5,7 @@ from flask_restplus import Namespace
 from flask_restplus import Resource
 from flask_restplus import fields
 
-from controller import Play
+from .controller import Play
 
 game_ns = Namespace("game", description="Game logic for tictactoe")
 

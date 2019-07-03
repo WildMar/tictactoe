@@ -1,6 +1,6 @@
 from flask import Flask
 
-from extensions import api
+from .extensions import api
 from resources.game import game_ns
 
 DEFAULT_HOST = "0.0.0.0"
