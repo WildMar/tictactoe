@@ -47,8 +47,8 @@ class Play(object):
 
             new_board = copy.deepcopy(self.board)
             for row in self.board:
-                if "" in row:
-                    new_board[self.board.index(row)][row.index("")] = self.player
+                if "___" in row:
+                    new_board[self.board.index(row)][row.index("___")] = self.player
                     return new_board, "IN PROGRESS"
             raise Exception("IM STUCK")
 
@@ -71,7 +71,7 @@ class Play(object):
             for element in direction:
                 if len(set(element)) == 1:
                     matched = set(element).pop()
-                    if matched != "":
+                    if matched != "___":
                         return matched
         return None
 
@@ -82,7 +82,7 @@ class Play(object):
         Returns:
             bool: True or False
         """
-        return all("" not in row for row in self.board)
+        return all("___" not in row for row in self.board)
 
     def _first_move(self):
         """
@@ -106,7 +106,7 @@ class Play(object):
         """
 
         # If the opponent hasn't taken the middle, do so
-        if self.board[1][1] == "":
+        if self.board[1][1] == "___":
             new_board = copy.deepcopy(self.board)
             new_board[1][1] = "X"
             return new_board
@@ -179,32 +179,32 @@ class Play(object):
     @staticmethod
     def _find_row_win(rows, player):
         for row in rows:
-            if "" in row:
+            if "___" in row:
                 if row.count(player) == 2:
-                    return rows.index(row), row.index("")
+                    return rows.index(row), row.index("___")
         return None, None
 
     @staticmethod
     def _find_column_win(columns, player):
         for col in columns:
-            if "" in col:
+            if "___" in col:
                 if col.count(player) == 2:
-                    return col.index(""), columns.index(col)
+                    return col.index("___"), columns.index(col)
         return None, None
 
     @staticmethod
     def _find_diagonal_win(diagonals, player):
         for diag in diagonals:
-            if "" in diag:
+            if "___" in diag:
                 if diag.count(player) == 2:
                     if diagonals.index(diag) == 0:
-                        return diag.index(""), diag.index("")
+                        return diag.index("___"), diag.index("___")
                     else:
-                        if diag.index("") == 0:
+                        if diag.index("___") == 0:
                             return 0, 2
-                        elif diag.index("") == 1:
+                        elif diag.index("___") == 1:
                             return 1, 1
-                        elif diag.index("") == 2:
+                        elif diag.index("___") == 2:
                             return 2, 0
 
         return None, None

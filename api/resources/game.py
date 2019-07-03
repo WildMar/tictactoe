@@ -21,7 +21,13 @@ play_fields = game_ns.model("Game", {
 class Game(Resource):
     @game_ns.doc()
     def get(self):
-        return HTTPStatus.OK
+        initial_board = dict(
+            row1=["___", "___", "___"],
+            row2=["___", "___", "___"],
+            row3=["___", "___", "___"],
+            move_number=0
+        )
+        return initial_board, HTTPStatus.OK
 
     @game_ns.expect(play_fields, validate=True)
     def post(self):
@@ -30,4 +36,4 @@ class Game(Resource):
         print(board)
         new_board, game_status = Play(player="X", move_number=move_number, board=board).calculate_next_move()
         print(new_board)
-        return dict(board=new_board, game_status=game_status, status_code=200)
+        return dict(board=new_board, game_status=game_status, status_code=HTTPStatus.OK)
