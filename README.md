@@ -29,6 +29,15 @@ pip install -r requirements.txt
 ```
 (Flesh out the build instructions when close to completion)
 
+### Run
+__Note__: Be sure to set the proper environment variables
+```
+cd tictactoe
+export FLASK_APP=api/app/app.py
+flask run
+``` 
+
+
 ## Build - Frontend
 __Disclaimer:__ This project is built with the most recent version of Node (10.16.0), and Angular CLI (8.0.4)
 
@@ -41,4 +50,9 @@ cd tictactoe/ui
 
 ```
 npm install
+```
+
+### Run
+```
+ng serve
 ```
