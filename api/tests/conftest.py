@@ -2,6 +2,10 @@ import pytest
 
 from app.app import create_app
 
+from os import sys
+
+sys.path.append("../")
+
 
 @pytest.fixture
 def app():

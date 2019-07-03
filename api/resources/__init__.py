@@ -1,1 +1,1 @@
-from .game import play_ns
+from .game import game_ns

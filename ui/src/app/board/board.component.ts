@@ -1,28 +1,44 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Cell} from "../cell";
+
+import {PlayApiService} from '../play-api.service';
+import {Subscription} from 'rxjs';
+import {BoardModel} from '../board.model';
+import {CellModel} from '../cell.model';
 
 
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-board',
+    providers: [PlayApiService],
+    templateUrl: './board.component.html',
+    styleUrls: ['./board.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class BoardComponent implements OnInit {
-  cells: Cell[] = [];
+    game: Subscription;
+    board: BoardModel;
 
-  constructor() {
-  }
 
-  ngOnInit() {
-    for (let i = 0; i < 9; i++) {
-      this.cells[i] = {value:"___"};
+    constructor(private playService: PlayApiService) {
     }
-  }
 
-  onClick(selectedCell: Cell) {
-    if (selectedCell.value == "___") {
-      selectedCell.value = "O";
+    ngOnInit() {
+
+        this.game = this.playService.startGame().subscribe(res => {
+                this.board = res;
+            },
+            console.error);
+
     }
-  }
+
+    //
+    // sendBoard(selection: PlayModel) {
+    //   if (!selection) {return;}
+    //   this.playService.startGame()
+    // }
+    //
+    onClick(selectedCell: CellModel) {
+        if (selectedCell.value === '___') {
+            selectedCell.value = 'O';
+        }
+    }
 }

@@ -1,14 +1,15 @@
 from flask import Flask
 
-from extensions import api
-from resources.game import play_ns
+from .extensions import api
+from .extensions import cors
+from resources.game import game_ns
 
 DEFAULT_HOST = "0.0.0.0"
 
 
 def register_namespaces():
     """ Registers namespaces to the API for swagger documentation"""
-    api.add_namespace(play_ns)
+    api.add_namespace(game_ns)
 
 
 def initialize_extensions(app):
@@ -20,6 +21,7 @@ def initialize_extensions(app):
         app: Constructed Flask app
     """
     api.init_app(app=app)
+    cors.init_app(app=app)
 
 
 def create_app():

@@ -29,6 +29,44 @@ pip install -r requirements.txt
 ```
 (Flesh out the build instructions when close to completion)
 
+### Run
+__Note__: Be sure to set the proper environment variables
+```
+cd tictactoe
+export FLASK_APP=api/app/app.py
+flask run
+``` 
+
+### Test
+Unit tests were created using pytest.
+```
+cd tictactoe/api
+export PYTHONPATH=`pwd`
+pytest
+```
+
+### Swagger
+A swagger interface is available. Run the Flask application and navigate to http://localhost:5000
+
+From here, you can directly send data to the API without a frontend. 
+
+#### Example Data:
+ ```{
+  "row1": [
+    "___", "___", "___"
+  ],
+  "row2": [
+    "O", "___", "___"
+  ],
+  "row3": [
+    "___", "___", "___"
+  ],
+  "move_number": 0
+}
+```
+
+__Note__: Empty cells should be labeled as "___" (3 underscores)
+
 ## Build - Frontend
 __Disclaimer:__ This project is built with the most recent version of Node (10.16.0), and Angular CLI (8.0.4)
 
@@ -41,4 +79,9 @@ cd tictactoe/ui
 
 ```
 npm install
+```
+
+### Run
+```
+ng serve
 ```

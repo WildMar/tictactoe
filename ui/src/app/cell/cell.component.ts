@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Cell} from "../cell";
+import {CellModel} from "../cell.model";
 
 
 @Component({
@@ -10,7 +10,7 @@ import {Cell} from "../cell";
 })
 export class CellComponent implements OnInit {
   @Input() value;
-  @Output("userClick") click = new EventEmitter<string>();
+  @Output('userClick') click = new EventEmitter<string>();
 
 
 
@@ -21,6 +21,6 @@ export class CellComponent implements OnInit {
   }
 
   cellClick() {
-    this.click.emit("")
+    this.click.emit('');
   }
 }
